@@ -1,12 +1,12 @@
-# 🚀 Interview Prep Analysis
+# Interview Prep Analysis
 
 An AI-powered interview preparation platform that helps users practice interview questions, submit answers, and receive automated feedback and analytics on their performance.
 
 ---
 
-## 📌 Features
+## Features
 
-### 🔐 Authentication
+### Authentication
 
 * User Registration
 * User Login
@@ -14,7 +14,7 @@ An AI-powered interview preparation platform that helps users practice interview
 * Protected Routes
 * User Profile
 
-### ❓ Question Management
+### Question Management
 
 * Create Interview Questions
 * View All Questions
@@ -22,21 +22,21 @@ An AI-powered interview preparation platform that helps users practice interview
 * Pagination Support
 * View Question Details
 
-### ✍️ Answer Management
+### Answer Management
 
 * Submit Answers
 * View Answers for a Question
 * View Personal Answer History
 * Delete Own Answers
 
-### 📊 Analytics Dashboard
+### Analytics Dashboard
 
 * Total Answers Submitted
 * Average Answer Length
 * Total Questions Attempted
 * Performance Tracking
 
-### 📝 Answer Analysis
+### Answer Analysis
 
 * Automatic Word Count
 * Answer Scoring
@@ -44,7 +44,7 @@ An AI-powered interview preparation platform that helps users practice interview
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -67,7 +67,7 @@ An AI-powered interview preparation platform that helps users practice interview
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 Interview_Prep_Analysis/
@@ -95,7 +95,7 @@ Interview_Prep_Analysis/
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 ### Clone Repository
 
@@ -207,7 +207,7 @@ http://localhost:5173
 
 ---
 
-## 📈 Future Enhancements
+## Future Enhancements
 
 * AI-Powered Answer Evaluation
 * Resume Analysis
@@ -220,7 +220,7 @@ http://localhost:5173
 
 ---
 
-## 🎯 Learning Outcomes
+## Learning Outcomes
 
 This project demonstrates:
 
@@ -237,7 +237,7 @@ This project demonstrates:
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Sujal Budhiraja**
 
@@ -247,6 +247,6 @@ Interested in Full Stack Development, AI, Machine Learning, and Cyber Security.
 
 ---
 
-## ⭐ Support
+## Support
 
 If you found this project useful, consider giving it a star on GitHub.
