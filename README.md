@@ -245,8 +245,3 @@ B.Tech Computer Science Engineering (Cyber Security)
 
 Interested in Full Stack Development, AI, Machine Learning, and Cyber Security.
 
----
-
-## Support
-
-If you found this project useful, consider giving it a star on GitHub.
