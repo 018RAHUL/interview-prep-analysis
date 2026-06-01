@@ -2,6 +2,7 @@
 
 Interview Prep Analysis is a full-stack MERN application designed to help users prepare for technical and HR interviews. The platform allows users to browse interview questions, submit answers, receive automated feedback based on answer analysis, and track their preparation progress through personalized analytics. 
 The application includes secure JWT-based authentication, question and answer management, search functionality, pagination, and performance tracking features. It provides a structured environment for practicing interview questions and monitoring improvement over time.
+
 ---
 
 ## Features
