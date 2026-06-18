@@ -7,13 +7,44 @@ import {
   getAnalytics,
 } from "../controllers/answerController.js";
 
+import { aiLimiter } from "../middleware/rateLimit.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", protect, submitAnswer);
-router.get("/user", protect, getUserAnswers);
-router.get("/question/:questionId", getAnswersByQuestion);
-router.delete("/:id", protect, deleteAnswer);
-router.get("/analytics",  protect,  getAnalytics);
+// AI Analysis Route (Rate Limited)
+router.post(
+  "/",
+  protect,
+  aiLimiter,
+  submitAnswer
+);
+
+// User Answers
+router.get(
+  "/user",
+  protect,
+  getUserAnswers
+);
+
+// Answers for a Question
+router.get(
+  "/question/:questionId",
+  getAnswersByQuestion
+);
+
+// Analytics
+router.get(
+  "/analytics",
+  protect,
+  getAnalytics
+);
+
+// Delete Answer
+router.delete(
+  "/:id",
+  protect,
+  deleteAnswer
+);
+
 export default router;

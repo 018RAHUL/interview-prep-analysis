@@ -22,6 +22,16 @@ export const registerUser = async (req, res, next) => {
       throw new Error("User already exists");
     }
 
+    //Security
+    const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/;
+
+    if (!passwordRegex.test(password)) {
+      throw new Error(
+        "Password must contain uppercase, lowercase, number and special character."
+      );
+    }
+
     // Create user (password auto-hashed via pre-save middleware)
     const user = await User.create({
       name,

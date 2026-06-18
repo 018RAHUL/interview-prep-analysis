@@ -3,6 +3,7 @@ import {
   getQuestions,
   getQuestionById,
   createQuestion,
+  getCategories,
   deleteQuestion,
 } from "../controllers/questionController.js";
 
@@ -14,6 +15,7 @@ const router = express.Router();
 // Get all questions (with filters)
 router.get("/", getQuestions);
 
+router.get("/categories",getCategories);
 
 // Get single question by ID
 router.get("/:id", getQuestionById);

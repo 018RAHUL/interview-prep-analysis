@@ -6,41 +6,120 @@ export default function QuestionCard({
   const navigate = useNavigate();
 
   return (
-    <div className="mb-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-      <h2 className="mb-2 text-xl font-bold">
+    <div
+      className="
+        mb-5
+        rounded-2xl
+        border
+        border-gray-200
+        dark:border-slate-700
+        bg-white
+        dark:bg-slate-900
+        p-6
+        shadow-md
+        transition-all
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-xl
+      "
+    >
+      {/* Title */}
+      <h2
+        className="
+          mb-3
+          text-2xl
+          font-bold
+          text-slate-900
+          dark:text-white
+        "
+      >
         {question.title}
       </h2>
 
-      <p className="mb-4 text-gray-600">
+      {/* Description */}
+      <p
+        className="
+          mb-5
+          text-gray-600
+          dark:text-slate-400
+          leading-relaxed
+        "
+      >
         {question.description}
       </p>
 
-      <div className="mb-4 flex gap-3">
-        <span className="rounded-md bg-blue-100 px-3 py-1 text-sm">
+      {/* Category & Difficulty */}
+      <div className="mb-5 flex flex-wrap gap-3">
+        <span
+          className="
+            rounded-full
+            bg-violet-100
+            px-4
+            py-1
+            text-sm
+            font-medium
+            text-violet-700
+            dark:bg-violet-900/40
+            dark:text-violet-300
+          "
+        >
           📚 {question.category}
         </span>
 
-        <span className="rounded-md bg-green-100 px-3 py-1 text-sm">
+        <span
+          className="
+            rounded-full
+            bg-emerald-100
+            px-4
+            py-1
+            text-sm
+            font-medium
+            text-emerald-700
+            dark:bg-emerald-900/40
+            dark:text-emerald-300
+          "
+        >
           ⚡ {question.difficulty}
         </span>
       </div>
 
-      <small className="mb-4 block text-gray-500">
-        Created:{" "}
+      {/* Date */}
+      <small
+        className="
+          mb-5
+          block
+          text-gray-500
+          dark:text-slate-500
+        "
+      >
+        Created on{" "}
         {new Date(
           question.createdAt
         ).toLocaleDateString()}
       </small>
 
+      {/* Button */}
       <button
         onClick={() =>
           navigate(
             `/questions/${question._id}`
           )
         }
-        className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        className="
+          rounded-xl
+          bg-violet-600
+          px-5
+          py-3
+          font-medium
+          text-white
+          shadow-md
+          transition-all
+          duration-300
+          hover:bg-violet-700
+          hover:shadow-lg
+        "
       >
-        View Details
+        View Details →
       </button>
     </div>
   );

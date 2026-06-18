@@ -29,6 +29,24 @@ const answerSchema = new mongoose.Schema(
       type: [String], // array of feedback messages
       default: [],
     },
+
+    strengths: [
+      {
+        type: String,
+      },
+    ],
+
+    weaknesses: [
+      {
+        type: String,
+      },
+    ],
+
+    missingKeywords:[
+      {
+        type: String,
+      }
+    ]
   },
   {
     timestamps: true,

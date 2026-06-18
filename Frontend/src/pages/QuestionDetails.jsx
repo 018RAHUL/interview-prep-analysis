@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import AnswerCard from "../components/AnswerCard";
 import Loader from "../components/Loader";
 
+import AnalysisModal from "../components/AnalysisModal";
+
 import { getQuestionById } from "../api/questions";
 
 import {
@@ -20,11 +22,20 @@ export default function QuestionDetails() {
 
   const [answers, setAnswers] = useState([]);
 
-  const [answerText, setAnswerText] = useState("");
+  const [showAnalysis, setShowAnalysis] =
+  useState(false);
 
-  const [loading, setLoading] = useState(true);
+  const [analysisData, setAnalysisData] =
+  useState(null);
 
-  const [submitting, setSubmitting] = useState(false);
+  const [answerText, setAnswerText] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [submitting, setSubmitting] =
+    useState(false);
 
   useEffect(() => {
     fetchData();
@@ -70,10 +81,23 @@ export default function QuestionDetails() {
     try {
       setSubmitting(true);
 
-      await submitAnswer({
+      const res = await submitAnswer({
         questionId: id,
         answerText,
       });
+
+      console.log("SUBMIT RESPONSE:");
+      -console.log(res.data);
+
+      setAnalysisData({
+        score: res.data.data.score,
+        feedback: res.data.data.feedback,
+        strengths: res.data.data.strengths,
+        missingKeywords: res.data.data.missingKeywords,
+        weaknesses: res.data.data.weaknesses,
+      });
+
+      setShowAnalysis(true);
 
       toast.success(
         "Answer submitted successfully"
@@ -98,34 +122,82 @@ export default function QuestionDetails() {
 
   return (
     <div className="space-y-8">
-      {/* Question Section */}
-      <div className="rounded-xl bg-white p-6 shadow">
-        <h1 className="mb-4 text-3xl font-bold">
+
+      {/* Hero Section */}
+      <div
+        className="
+          rounded-3xl
+          bg-gradient-to-r
+          from-violet-600
+          to-indigo-700
+          p-8
+          text-white
+          shadow-xl
+        "
+      >
+        <h1 className="text-4xl font-bold">
           {question?.title}
         </h1>
 
-        <p className="mb-6 text-gray-700">
+        <p className="mt-4 text-violet-100 leading-relaxed">
           {question?.description}
         </p>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap gap-3">
           {question?.category && (
-            <span className="rounded-md bg-blue-100 px-3 py-1 text-sm">
+            <span
+              className="
+                rounded-full
+                bg-white/20
+                px-4
+                py-1
+                text-sm
+                font-medium
+              "
+            >
               📚 {question.category}
             </span>
           )}
 
           {question?.difficulty && (
-            <span className="rounded-md bg-green-100 px-3 py-1 text-sm">
+            <span
+              className="
+                rounded-full
+                bg-white/20
+                px-4
+                py-1
+                text-sm
+                font-medium
+              "
+            >
               ⚡ {question.difficulty}
             </span>
           )}
         </div>
       </div>
 
-      {/* Answer Form */}
-      <div className="rounded-xl bg-white p-6 shadow">
-        <h2 className="mb-4 text-2xl font-semibold">
+      {/* Submit Answer */}
+      <div
+        className="
+          rounded-2xl
+          border
+          border-gray-200
+          dark:border-slate-700
+          bg-white
+          dark:bg-slate-900
+          p-6
+          shadow-md
+        "
+      >
+        <h2
+          className="
+            mb-5
+            text-2xl
+            font-bold
+            text-slate-900
+            dark:text-white
+          "
+        >
           Submit Your Answer
         </h2>
 
@@ -134,7 +206,7 @@ export default function QuestionDetails() {
           className="space-y-4"
         >
           <textarea
-            rows="6"
+            rows="8"
             placeholder="Write your answer here..."
             value={answerText}
             onChange={(e) =>
@@ -144,14 +216,20 @@ export default function QuestionDetails() {
             }
             className="
               w-full
-              rounded-lg
+              rounded-xl
               border
               border-gray-300
-              p-3
+              dark:border-slate-700
+              bg-white
+              dark:bg-slate-800
+              p-4
+              text-slate-900
+              dark:text-white
               outline-none
-              focus:border-blue-500
+              transition
+              focus:border-violet-500
               focus:ring-2
-              focus:ring-blue-200
+              focus:ring-violet-500/30
             "
           />
 
@@ -159,53 +237,122 @@ export default function QuestionDetails() {
             type="submit"
             disabled={submitting}
             className="
-              rounded-lg
-              bg-blue-600
-              px-5
+              rounded-xl
+              bg-violet-600
+              px-6
               py-3
+              font-semibold
               text-white
+              shadow-md
               transition
-              hover:bg-blue-700
+              hover:bg-violet-700
+              hover:shadow-lg
               disabled:cursor-not-allowed
               disabled:opacity-50
             "
           >
             {submitting
               ? "Submitting..."
-              : "Submit Answer"}
+              : "Submit Answer 🚀"}
           </button>
         </form>
       </div>
 
       {/* Answers Section */}
       <div>
-        <h2 className="mb-4 text-2xl font-semibold">
-          Answers ({answers.length})
-        </h2>
+        <div className="mb-5 flex items-center justify-between">
+          <h2
+            className="
+              text-3xl
+              font-bold
+              text-slate-900
+              dark:text-white
+            "
+          >
+            Answers
+          </h2>
+
+          <span
+            className="
+              rounded-full
+              bg-violet-100
+              px-4
+              py-2
+              text-sm
+              font-semibold
+              text-violet-700
+              dark:bg-violet-900/30
+              dark:text-violet-300
+            "
+          >
+            {answers.length} Response
+            {answers.length !== 1
+              ? "s"
+              : ""}
+          </span>
+        </div>
 
         {answers.length === 0 ? (
           <div
             className="
-              rounded-xl
+              rounded-2xl
               border
               border-dashed
-              border-gray-400
+              border-gray-300
+              dark:border-slate-700
               bg-white
-              p-8
+              dark:bg-slate-900
+              p-12
               text-center
+              shadow-sm
             "
           >
-            No answers submitted yet.
+            <h3
+              className="
+                text-xl
+                font-semibold
+                text-slate-900
+                dark:text-white
+              "
+            >
+              No Answers Yet
+            </h3>
+
+            <p
+              className="
+                mt-2
+                text-gray-500
+                dark:text-slate-400
+              "
+            >
+              Be the first person to
+              answer this question.
+            </p>
           </div>
         ) : (
-          answers.map((answer) => (
-            <AnswerCard
-              key={answer._id}
-              answer={answer}
-            />
-          ))
+          <div className="space-y-5">
+            {answers.map(
+              (answer) => (
+                <AnswerCard
+                  key={
+                    answer._id
+                  }
+                  answer={
+                    answer
+                  }
+                />
+              )
+            )}
+          </div>
         )}
       </div>
+      <AnalysisModal
+        isOpen={showAnalysis}
+        onClose={() =>
+          setShowAnalysis(false)
+        }
+        analysis={analysisData}
+      />
     </div>
   );
 }

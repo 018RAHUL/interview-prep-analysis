@@ -1,53 +1,72 @@
 import Answer from "../models/Answer.js";
 import Question from "../models/Question.js";
 import { analyzeAnswer } from "../utils/analyzeAnswer.js";
-
+import xss from "XSS";
 
 // Submit Answer
+// controllers/answerController.js
+
 export const submitAnswer = async (req, res, next) => {
   try {
-    const { questionId, answerText } = req.body;
-
-    // Validation
-    if (!questionId || !answerText) {
-      res.status(400);
-      throw new Error("Question ID and Answer are required");
-    }
-
-    // Check if question exists
-    const question = await Question.findById(questionId);
-    if (!question) {
-      res.status(404);
-      throw new Error("Question not found");
-    }
-
-    // Analyze answer (your USP)
-    const result = analyzeAnswer(answerText);
-
-    // Create answer
-    const answer = await Answer.create({
-      userId: req.user.id, // from auth middleware
+    let {
       questionId,
       answerText,
-      score: result.score,
-      feedback: result.feedback,
-    });
+    } = req.body;
 
-    // Populate before sending
-    const populatedAnswer = await Answer.findById(answer._id)
-      .populate("userId", "name") //Show name instead of userId in answer/response
-      .populate("questionId", "title category");    //Show title and category instead of questionId in answer/response
+    answerText = xss(answerText);
+
+    if (answerText.length > 5000) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Answer exceeds maximum length.",
+      });
+    }
+
+    const question =
+      await Question.findById(questionId);
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        message: "Question not found",
+      });
+    }
+
+    const analysis =
+      await analyzeAnswer(
+        question.title,
+        answerText
+      );
+
+      console.log("ANALYSIS:");
+      console.log(analysis);
+
+    const answer =
+      await Answer.create({
+        questionId: question._id,
+        userId: req.user._id,
+        answerText,
+        score: analysis.score,
+        feedback: analysis.feedback,
+        strengths: analysis.strengths,
+        weaknesses: analysis.weaknesses,
+        missingKeywords: analysis.missingKeywords,
+      });
+
+      console.log("SAVED ANSWER:");
+      console.log(answer);
 
     res.status(201).json({
       success: true,
-      message: "Answer submitted successfully",
-      data: populatedAnswer
+      message:
+        "Answer submitted successfully",
+      data: answer,
     });
   } catch (error) {
     next(error);
   }
 };
-
 
 
 // Get all answers of logged-in user
@@ -163,7 +182,12 @@ export const getAnalytics = async (req, res, next) => {
     let totalWords = 0;
 
     answers.forEach((answer) => {
-      totalWords += answer.wordCount;
+      const wordCount =
+        answer.answerText
+          ?.trim()
+          .split(/\s+/).length || 0;
+
+      totalWords += wordCount;
     });
 
     const averageWords =
@@ -171,18 +195,64 @@ export const getAnalytics = async (req, res, next) => {
         ? Math.round(totalWords / totalAnswers)
         : 0;
 
-    const uniqueQuestions = new Set(
-      answers.map((a) => a.questionId.toString())
-    );
+    const answeredQuestions =
+    await Question.find({
+      _id: {
+        $in: answers.map(
+          (a) => a.questionId
+        ),
+      },
+    });
+
+  const easySolved =
+    answeredQuestions.filter(
+      (q) =>
+        q.difficulty === "easy"
+    ).length;
+
+  const mediumSolved =
+    answeredQuestions.filter(
+      (q) =>
+        q.difficulty === "medium"
+    ).length;
+
+  const hardSolved =
+    answeredQuestions.filter(
+      (q) =>
+        q.difficulty === "hard"
+    ).length;
+
+    const totalEasy = 
+    await Question.countDocuments({
+      difficulty: "easy",
+    });
+
+    const totalMedium = 
+    await Question.countDocuments({
+      difficulty: "medium",
+    });
+    const totalHard = 
+    await Question.countDocuments({
+      difficulty: "hard",
+    });
 
     res.status(200).json({
       success: true,
-      message: "Analytics fetched successfully",
+      message:
+        "Analytics fetched successfully",
       data: {
         totalAnswers,
         averageWords,
         totalQuestionsAttempted:
-          uniqueQuestions.size,
+          answeredQuestions.length,
+
+        easySolved,
+        mediumSolved,
+        hardSolved,
+
+        totalEasy,
+        totalMedium,
+        totalHard,
       },
     });
   } catch (error) {

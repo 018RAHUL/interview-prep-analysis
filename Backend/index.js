@@ -7,6 +7,12 @@ import questionRoutes from "./routes/questionRoutes.js";
 import answerRoutes from "./routes/answerRoutes.js";
 
 import { errorHandler } from "./middleware/errorMiddleware.js";
+import { logger } from "./middleware/logger.js"
+//Security
+import helmet from "helmet";
+import { sanitizeInput } from "./middleware/sanitize.js";
+
+import { apiLimiter } from "./middleware/rateLimit.js"
 
 dotenv.config();
 
@@ -17,8 +23,18 @@ const PORT = process.env.PORT || 4000;
 connectDB();
 
 // Middleware Parser
+app.use(helmet());
+app.use(sanitizeInput);
+app.use(logger);
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
+
 //Middleware
 app.use((req, res, next) => {
   res.on("finish", () => {
@@ -28,6 +44,7 @@ app.use((req, res, next) => {
   });
   next();
 });
+app.use("/api", apiLimiter);
 
 // Routes
 app.use("/api/v1/auth", authRoutes);
