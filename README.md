@@ -1,48 +1,72 @@
-# Interview Prep Analysis
+# Interview Prep & Analysis
 
-Interview Prep Analysis is a full-stack MERN application designed to help users prepare for technical and HR interviews. The platform allows users to browse interview questions, submit answers, receive automated feedback based on answer analysis, and track their preparation progress through personalized analytics. 
-
-The application includes secure JWT-based authentication, question and answer management, search functionality, pagination, and performance tracking features. It provides a structured environment for practicing interview questions and monitoring improvement over time.
-
----
+An AI-powered MERN Stack platform that helps users practice interview questions, submit answers, and receive intelligent feedback using Google's Gemini AI.
 
 ## Features
 
 ### Authentication
 
-* User Registration
-* User Login
+* User Registration & Login
 * JWT Authentication
 * Protected Routes
-* User Profile
+* Password Hashing using bcrypt
 
-### Question Management
+### Interview Questions
 
 * Create Interview Questions
-* View All Questions
+* Dynamic Categories
+* Difficulty Levels (Easy, Medium, Hard)
 * Search Questions
+* Category Filtering
 * Pagination Support
-* View Question Details
 
-### Answer Management
+### AI Answer Analysis
 
-* Submit Answers
-* View Answers for a Question
-* View Personal Answer History
-* Delete Own Answers
+Powered by Google Gemini AI.
+
+For every submitted answer, the system provides:
+
+* AI Generated Score (0–100)
+* Strengths Analysis
+* Weaknesses Analysis
+* Missing Keywords Detection
+* Overall Feedback
+
+### AI Question Validation
+
+Before a question is created:
+
+* Detects gibberish text
+* Rejects meaningless questions
+* Validates category relevance
+* Ensures interview suitability
 
 ### Analytics Dashboard
 
+Track your preparation progress:
+
 * Total Answers Submitted
-* Average Answer Length
-* Total Questions Attempted
-* Performance Tracking
+* Average Words per Answer
+* Questions Attempted
+* Difficulty-wise Progress
+* Visual Analytics Cards
 
-### Answer Analysis
+### UI Features
 
-* Automatic Word Count
-* Answer Scoring
-* Personalized Feedback Generation
+* Modern Responsive Design
+* Dark Mode
+* Light Mode
+* Animated Components
+* Professional Dashboard
+
+### Security Features
+
+* JWT Authentication
+* Rate Limiting
+* XSS Protection
+* Input Sanitization
+* Prompt Injection Protection
+* Protected API Routes
 
 ---
 
@@ -51,199 +75,120 @@ The application includes secure JWT-based authentication, question and answer ma
 ### Frontend
 
 * React.js
-* React Router DOM
-* Axios
+* Vite
 * Tailwind CSS
+* Axios
+* React Router
 * React Toastify
 
 ### Backend
 
 * Node.js
 * Express.js
-* JWT Authentication
+* MongoDB
 * Mongoose
 
-### Database
+### AI
 
-* MongoDB Atlas
+* Google Gemini API
 
 ---
 
 ## Project Structure
 
-```bash
-Interview_Prep_Analysis/
+```text
+Interview_Prep_Analysis
 │
-├── Backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── config/
+├── Backend
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── utils
 │   └── index.js
 │
-├── Frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── pages/
-│   │   └── layouts/
-│   └── public/
-│
-└── README.md
+└── Frontend
+    ├── src
+    │   ├── api
+    │   ├── components
+    │   ├── context
+    │   ├── pages
+    │   └── assets
+    └── public
 ```
-
----
 
 ## Installation
 
 ### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/interview-prep-analysis.git
+git clone https://github.com/018RAHUL/interview-prep-analysis.git
 cd interview-prep-analysis
 ```
 
----
-
-## Backend Setup
-
-### Navigate to Backend
+### Backend Setup
 
 ```bash
 cd Backend
-```
 
-### Install Dependencies
-
-```bash
 npm install
 ```
 
-### Create .env File
+Create a `.env` file:
 
 ```env
 PORT=5000
-
-MONGO_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_secret_key
+MONGO_URI=YOUR_MONGODB_URI
+JWT_SECRET=YOUR_SECRET
+GEMINI_API_KEY=YOUR_API_KEY
 ```
 
-### Start Backend
+Start Backend:
 
 ```bash
 npm run dev
 ```
 
-Backend will run on:
+### Frontend Setup
 
 ```bash
+cd Frontend
+
+npm install
+npm run dev
+```
+
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+Backend:
+
+```text
 http://localhost:5000
 ```
 
 ---
 
-## Frontend Setup
-
-### Navigate to Frontend
-
-```bash
-cd Frontend
-```
-
-### Install Dependencies
-
-```bash
-npm install
-```
-
-### Start Frontend
-
-```bash
-npm run dev
-```
-
-Frontend will run on:
-
-```bash
-http://localhost:5173
-```
-
----
-
-## API Endpoints
-
-### Authentication
-
-| Method | Endpoint              | Description   |
-| ------ | --------------------- | ------------- |
-| POST   | /api/v1/auth/register | Register User |
-| POST   | /api/v1/auth/login    | Login User    |
-| GET    | /api/v1/auth/profile  | Get Profile   |
-
----
-
-### Questions
-
-| Method | Endpoint              | Description        |
-| ------ | --------------------- | ------------------ |
-| POST   | /api/v1/questions     | Create Question    |
-| GET    | /api/v1/questions     | Get All Questions  |
-| GET    | /api/v1/questions/:id | Get Question By ID |
-| DELETE | /api/v1/questions/:id | Delete Question    |
-
----
-
-### Answers
-
-| Method | Endpoint                             | Description      |
-| ------ | ------------------------------------ | ---------------- |
-| POST   | /api/v1/answers                      | Submit Answer    |
-| GET    | /api/v1/answers/user                 | User Answers     |
-| GET    | /api/v1/answers/question/:questionId | Question Answers |
-| GET    | /api/v1/answers/analytics            | User Analytics   |
-| DELETE | /api/v1/answers/:id                  | Delete Answer    |
-
----
-
 ## Future Enhancements
 
-* AI-Powered Answer Evaluation
-* Resume Analysis
-* Interview Recommendation System
-* Mock Interview Generator
-* Leaderboards
-* Role-Based Question Sets
-* LLM Integration
-* Speech-to-Text Interview Practice
-
----
-
-## Learning Outcomes
-
-This project demonstrates:
-
-* Full Stack MERN Development
-* JWT Authentication
-* REST API Design
-* MongoDB Integration
-* Pagination & Search
-* State Management
-* Protected Routes
-* API Standardization
-* Error Handling
-* Responsive UI Design
+* AI Generated Questions
+* Leaderboard System
+* Question Upvotes
+* Interview Roadmaps
+* Mock Interview Simulator
+* Answer History Tracking
+* Resume-Based Interview Generation
 
 ---
 
 ## Author
 
-**Sujal Budhiraja**
+Sujal Budhiraja
 
-B.Tech Computer Science Engineering (Cyber Security)
+Cyber Security Student | MERN Developer | AI Enthusiast
 
-Interested in Full Stack Development, AI, Machine Learning, and Cyber Security.
-
+GitHub:
+https://github.com/018RAHUL
