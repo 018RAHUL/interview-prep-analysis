@@ -1,7 +1,7 @@
 import Answer from "../models/Answer.js";
 import Question from "../models/Question.js";
 import { analyzeAnswer } from "../utils/analyzeAnswer.js";
-import xss from "XSS";
+import xss from "xss";
 
 // Submit Answer
 // controllers/answerController.js
