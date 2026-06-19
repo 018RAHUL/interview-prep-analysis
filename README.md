@@ -70,6 +70,40 @@ Track your preparation progress:
 
 ---
 
+## Screenshots
+
+### Dashboard
+
+![Dashboard](./Screenshots/dashboard.png)
+
+---
+
+### AI Answer Analysis
+
+![AI Analysis](./Screenshots/analysis.png)
+![AI Analysis](./Screenshots/analysis2.png)
+
+---
+
+### Question Details
+
+![Question Details](./Screenshots/question.png)
+![Question Details](./Screenshots/question2.png)
+
+---
+
+### Create Question
+
+![Create Question](./Screenshots/createQuestion.png)
+
+---
+
+### Profile
+
+![Profile](./Screenshots/Profile.png)
+
+---
+
 ## Tech Stack
 
 ### Frontend
