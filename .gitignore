@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+node_modules/
+Backend/node_modules/
+Frontend/node_modules/
+
+# Environment Variables
+.env
+Backend/.env
+Frontend/.env
+
+# Build Files
+dist/
+build/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Runtime Data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Vercel
+.vercel/
+
+# Render
+.render/
+
+# Temporary Files
+tmp/
+temp/
+
+# Generated files
+*.local
+
+# Optional screenshots backup
+screenshots/*.tmp
+.history
+.idea
